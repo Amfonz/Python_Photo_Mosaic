@@ -2,7 +2,6 @@ __author__ = 'MichaelFriend'
 from tkinter import Tk, Button, Label, filedialog, StringVar, Entry,IntVar
 from photoMosaic import MosaicGenerator as mg
 import threading
-from tkinter.ttk import Progressbar
 '''
 todo: disable controls until program is done, validate file save type at front
 '''
@@ -41,7 +40,6 @@ class MosaicGUI:
         self.job_label = Label(master,textvariable=self.job_label_text)
 
         self.job_status = Label(master,textvariable=self.job_status_text)
-        self.progress_bar = Progressbar(master, orient="horizontal",length=200,mode="indeterminate")
 
         self.error_label = Label(master,textvariable=self.error_text)
 
@@ -57,7 +55,6 @@ class MosaicGUI:
         self.start_button.pack()
         self.job_label.pack()
         self.job_status.pack()
-        self.progress_bar.pack()
         self.error_label.pack()
 
     def choose_save(self):
@@ -85,7 +82,7 @@ class MosaicGUI:
     def start_thread(self):
         self.launch_thread = threading.Thread(target=self.launch_generator)
         self.start_button.config(state='disabled')
-        self.progress_bar.start()
+        self.launch_thread.start()
         root.after(20,self.check_start_thread)
 
     def check_start_thread(self):
